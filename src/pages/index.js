@@ -1,3 +1,37 @@
 import React from "react"
+import { StaticQuery, graphql } from 'gatsby';
 
-export default () => <div>Hello world!</div>
+const TitleAndDescription = ({data: {title, description}}) => (
+    <div>
+        <h1>{title}</h1>
+        <h3>{description}</h3>
+    </div>
+);
+
+const Header = () => {
+    return (
+        <StaticQuery
+            query={graphql`
+                query {
+                    site {
+                        siteMetadata {
+                            title
+                            description
+                        }
+                    }
+                }
+            `}
+            render={data => (<TitleAndDescription data={data.site.siteMetadata}/>)}
+        />
+    )
+}
+
+const Layout = () => {
+    return (
+        <div>
+            <Header/>
+        </div>
+    );
+}
+
+export default Layout;
