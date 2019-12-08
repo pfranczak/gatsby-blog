@@ -1,10 +1,19 @@
 import React from 'react';
-import { graphql, Link } from 'gatsby';
+import { Link } from 'gatsby';
 
-export default ({data}) => {
+export default ({data, pageContext}) => {
+    const {tagName, posts} = pageContext;
     return (
         <div>
-            tag here
+            <h1>Posts about {tagName}</h1>
+            <ul>
+                {posts.map(({frontmatter}) => {
+                    const {path, title} = frontmatter;
+                    return (
+                            <li key={path}><Link to={path}>{title}</Link></li>
+                    )})
+                }
+            </ul>
         </div>
     )
 };
